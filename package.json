@@ -2,7 +2,7 @@
   "name": "remind-me",
   "description": "A note taking, alarm setting, and reminder setting app.",
   "author": "Nano-AI",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "build": {
     "appId": "com.nanoai.remindme",

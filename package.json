@@ -1,11 +1,12 @@
 {
-  "name": "note-taker",
+  "name": "remind-me",
   "description": "A note taking, alarm setting, and reminder setting app.",
   "author": "Nano-AI",
   "version": "0.1.0",
   "private": true,
   "build": {
-    "appId": "com.nanoai.notetaker",
+    "appId": "com.nanoai.remindme",
+    "productName": "Remind Me",
     "files": [
       "dist/**/*",
       "build/**/*",
@@ -49,7 +50,7 @@
     "start": "concurrently \"SET BROWSER=none && npm run react\" \"wait-on http://localhost:3000 && npm run electron-nodemon \"",
     "electron-nodemon": "nodemon --watch * --exec \"electron .\"",
     "release": "react-scripts build && electron-builder --publish=always",
-    "build": "react-scripts build && electron-builder"
+    "build": "react-scripts build && electron-builder"  
   },
   "eslintConfig": {
     "extends": [

@@ -33,7 +33,7 @@ class Get_Nav extends Component {
               <MenuIcon />
             </IconButton> */}
             <Typography variant="h6" className={classes.title}>
-              Note Taker
+              Remind Me
             </Typography>
           </Toolbar>
         </AppBar>

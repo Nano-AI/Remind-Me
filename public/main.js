@@ -47,7 +47,7 @@ app.on("activate", () => {
 function run_alarms() {
   clearInterval();
   const storage = require("electron-json-storage");
-  const { Notification } = require('electron')
+  const { Notification } = require("electron");
   const format_time = (date) => {
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -62,22 +62,30 @@ function run_alarms() {
     storage.get("alarms", function (error, data) {
       if (error) throw error;
       let current_time = new Date();
-      data.alarms.forEach((item) => {
-        var date = new Date(item);
-        var set_formatted_date = format_time(date);
-        var current_formatted_date = format_time(current_time);
-        if (set_formatted_date == current_formatted_date && !rung_alarms[set_formatted_date]) {
-          var caps = set_formatted_date.toUpperCase();
-          const notification_js = {
-            title: caps,
-            body: `You have an alarm set for ${caps}`
-          };
-          new Notification(notification_js).show();
-          rung_alarms[set_formatted_date] = true;
-        } else if (set_formatted_date != current_formatted_date && run_alarms[set_formatted_date]) {
-          rung_alarms[set_formatted_date] = false;
-        }
-      });
+      if (data.alarms !== undefined) {
+        data.alarms.forEach((item) => {
+          var date = new Date(item);
+          var set_formatted_date = format_time(date);
+          var current_formatted_date = format_time(current_time);
+          if (
+            set_formatted_date == current_formatted_date &&
+            !rung_alarms[set_formatted_date]
+          ) {
+            var caps = set_formatted_date.toUpperCase();
+            const notification_js = {
+              title: caps,
+              body: `You have an alarm set for ${caps}`,
+            };
+            new Notification(notification_js).show();
+            rung_alarms[set_formatted_date] = true;
+          } else if (
+            set_formatted_date != current_formatted_date &&
+            run_alarms[set_formatted_date]
+          ) {
+            rung_alarms[set_formatted_date] = false;
+          }
+        });
+      }
     });
   }, 1000);
 }

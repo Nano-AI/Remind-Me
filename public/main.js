@@ -68,10 +68,11 @@ function run_alarms() {
         var current_formatted_date = format_time(current_time);
         if (set_formatted_date == current_formatted_date && !rung_alarms[set_formatted_date]) {
           var caps = set_formatted_date.toUpperCase();
-          const notification = {
-            title: set_formatted_date.toUpperCase(),
-            body: `It is currently ${notification}`
+          const notification_js = {
+            title: caps,
+            body: `You have an alarm set for ${caps}`
           };
+          new Notification(notification_js).show();
           rung_alarms[set_formatted_date] = true;
         } else if (set_formatted_date != current_formatted_date && run_alarms[set_formatted_date]) {
           rung_alarms[set_formatted_date] = false;

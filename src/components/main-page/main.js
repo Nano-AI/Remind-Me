@@ -2,6 +2,7 @@ import { Component } from 'react';
 import Get_Nav from './../navbar/navbar';
 import Get_Speed_Dial from './../speed-dial/speed_dial';
 import ViewAlarms from './../view-elements/alarms';
+import ViewNotes from './../view-elements/notes';
 import run_alarms from './../notification/alarm_notify';
 
 class Main extends Component {
@@ -13,6 +14,7 @@ class Main extends Component {
         <Get_Nav />
         <Get_Speed_Dial />
         <ViewAlarms />
+        <ViewNotes />
         {/* {Get_Speed_Dial()} */}
       </div>
     );

@@ -35,46 +35,45 @@ const useStyles = (theme) => ({
   }
 });
 
-class ViewAlarms extends Component {
+class ViewNotes extends Component {
   constructor(props) {
     super(props);
+    // this.state = {};
     this.state = {
-      alarms: undefined,
+      // notes: undefined,
     };
   }
 
   render() {
+    const { remote, ipcRenderer } = window.require('electron');
     const { classes } = this.props;
 
-    const storage = window.require("electron-json-storage");
+    // ipcRenderer.
 
-    storage.get("alarms", function (error, data) {
-      if (error) throw error;
-      set_state(data);
-    });
+    const storage = window.require("electron-json-storage");
+    if (this.state.notes == undefined) {
+      storage.get("notes", function (error, data) {
+        if (error) throw error;
+        console.log(data)
+        set_state(data.ids);
+      });
+    }
 
     const set_state = (data) => {
-      if (this.state.alarms != undefined) return;
-      this.setState({ alarms: data.alarms });
+      this.setState({ notes: data });
     };
 
-    const formatDate = (date) => {
-      var hours = date.getHours();
-      var minutes = date.getMinutes();
-      var ampm = hours >= 12 ? "pm" : "am";
-      hours = hours % 12;
-      hours = hours ? hours : 12; // the hour '0' should be '12'
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
-      return strTime;
+    const get_title = (id) => {
+      return localStorage.getItem(`smde_${id}`);
     };
 
-    const delete_alarm = (index) => {
-      storage.get("alarms", function (error, data) {
+    const delete_note = (index) => {
+      storage.get("notes", function (error, data) {
         if (error) throw error;
-        let alarms = data.alarms;
-        alarms.splice(index, 1);
-        storage.set("alarms", { alarms: alarms }, function (error) {
+        let ids = data.ids;
+        localStorage.removeItem(ids[index]);
+        ids.splice(index, 1);
+        storage.set("notes", { ids: ids }, function (error) {
           if (error) throw error;
           window.location.reload();
         });
@@ -83,19 +82,19 @@ class ViewAlarms extends Component {
 
     return (
       <div className={classes.root}>
-        <h1 className={classes.title}>Alarms</h1>
-        {this.state.alarms !== undefined &&
-          this.state.alarms.map((value, key) => {
+        <h1 className={classes.title}>Notes</h1>
+        {this.state.notes !== undefined &&
+          this.state.notes.map((id, index) => {
             return (
               <Card className={classes.alarm}>
                 <CardContent>
                   <Typography variant="h5" component="h2">
                     <Toolbar>
                       <Box display="flex" flexGrow={1}>
-                        {formatDate(new Date(value))}
+                        {get_title(id)}
                       </Box>
                       <IconButton
-                        onClick={() => delete_alarm(key)}
+                        onClick={() => delete_note(index)}
                         aria-label="delete"
                       >
                         <DeleteIcon style={{ marginLeft: "auto" }} />
@@ -111,4 +110,4 @@ class ViewAlarms extends Component {
   }
 }
 
-export default withStyles(useStyles)(ViewAlarms);
+export default withStyles(useStyles)(ViewNotes);

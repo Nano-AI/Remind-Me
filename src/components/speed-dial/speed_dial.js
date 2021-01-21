@@ -17,6 +17,7 @@ import Reminder from "../make-item/reminder";
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
+
 const useStyles = (theme) => ({
   root: {
     flexGrow: 1,
